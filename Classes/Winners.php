@@ -41,6 +41,9 @@ class Winners {
                 <td>$this->city</td>
                 <td>$this->type</td>
                 <td>$this->discipline</td>
+                <td><a href='?edit=$this->id'  class='btn btn-primary'>upraviť</a></td>
+                 <td><a href='?delete=$this->id' class='btn btn-danger'>vymazať</a></td>
+                  </tr>
         ";
     }
 

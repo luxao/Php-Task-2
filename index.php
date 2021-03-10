@@ -11,8 +11,10 @@ $sortYearDesc = "yearDesc";
 $sortTypeAsc = "typeAsc";
 $sortTypeDesc = "typeDesc";
 $urlSort = $_GET['sorting'];
-
 $urlPerson = $_GET['person'];
+$urlEdit = $_GET['edit'];
+
+$person = new Person();
 
 try {
     $db = new Database();
@@ -68,7 +70,6 @@ from osoby join umiestnenia u on osoby.id = u.person_id join oh o on o.id = u.oh
 catch (PDOException $exception){
     echo "Error: " . $exception->getMessage();
 }
-
 ?>
 
 <!doctype html>
@@ -152,6 +153,8 @@ catch (PDOException $exception){
         border-radius: 10px;
     }
 
+
+
 </style>
 
 <body>
@@ -166,27 +169,6 @@ catch (PDOException $exception){
 
 <main>
     <div class='container'>
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Uprav Olympionika</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#" method="post">
-                            <input type="text" name="name" placeholder="Meno">
-                            <input type="text" name="surname" placeholder="Priezvisko">
-                            <input type="number"  min="1900" max="2100" name="year" placeholder="rok">
-                            <button type="submit" class="btn btn-success">potvrdiť</button>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <table class='table table-dark table-hover table-bordered border-light  table-hover'>
             <thead>
             <tr>
@@ -232,17 +214,13 @@ catch (PDOException $exception){
                     if ($urlSort == "nameAsc") {
                         foreach ($resultASC as $winners) {
                             echo $winners->getRow();
-                            echo "<td><button type='button' class='btn btn-primary'  data-toggle='modal' data-target='#myModal'>upraviť</button></td>
-                               <td><button type='button' class='btn btn-danger'>vymazať</button></td>
-                               </tr>";
+
                         }
                     }
                     if ($urlSort == "nameDesc") {
                         foreach ($resultDESC as $winners) {
                             echo $winners->getRow();
-                            echo "<td><button type='button' class='btn btn-primary'  data-toggle='modal' data-target='#myModal'>upraviť</button></td>
-                               <td><button type='button' class='btn btn-danger'>vymazať</button></td>
-                               </tr>";
+
                         }
                     }
 
@@ -250,37 +228,27 @@ catch (PDOException $exception){
                     if ($urlSort == "typeAsc") {
                         foreach ($resultTypeAsc as $winners) {
                             echo $winners->getRow();
-                            echo "<td><button type='button' class='btn btn-primary'  data-toggle='modal' data-target='#myModal'>upraviť</button></td>
-                               <td><button type='button' class='btn btn-danger'>vymazať</button></td>
-                               </tr>";
+
                         }
                     } else if ($urlSort == "typeDesc") {
                         foreach ($resultTypeDesc as $winners) {
                             echo $winners->getRow();
-                            echo "<td><button type='button' class='btn btn-primary'  data-toggle='modal' data-target='#myModal'>upraviť</button></td>
-                               <td><button type='button' class='btn btn-danger'>vymazať</button></td>
-                               </tr>";
+
                         }
                     } else if ($urlSort == "yearAsc") {
                         foreach ($resultYearAsc as $winners) {
                             echo $winners->getRow();
-                            echo "<td><button type='button' class='btn btn-primary'  data-toggle='modal' data-target='#myModal'>upraviť</button></td>
-                               <td><button type='button' class='btn btn-danger'>vymazať</button></td>
-                               </tr>";
+
                         }
                     } else if ($urlSort == "yearDesc") {
                         foreach ($resultYearDesc as $winners) {
                             echo $winners->getRow();
-                            echo "<td><button type='button' class='btn btn-primary'  data-toggle='modal' data-target='#myModal'>upraviť</button></td>
-                               <td><button type='button' class='btn btn-danger'>vymazať</button></td>
-                               </tr>";
+
                         }
                     } else {
                         foreach ($result as $winners) {
                             echo $winners->getRow();
-                            echo "<td><button type='button' class='btn btn-primary'  data-toggle='modal' data-target='#myModal'>upraviť</button></td>
-                               <td><button type='button' class='btn btn-danger'>vymazať</button></td>
-                               </tr>";
+
                         }
                     }
             }
