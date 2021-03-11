@@ -165,14 +165,6 @@ if(isset($_POST['name'])){
     </div>
 </main>
 
-  <script>
-      window.addEventListener('submit',()=>{
-          console.log(document.getElementById('name').value);
-          console.log(document.getElementById('surname').value);
-
-      })
-
-  </script>
 
 </body>
 
