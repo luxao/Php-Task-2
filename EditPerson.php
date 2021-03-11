@@ -43,6 +43,8 @@ if(isset($_POST['name'])){
         $stmt = $conn->getConnection()->prepare("Update osoby set name='$name', surname='$surname' where id ='$id'");
         $stmt->execute();
 
+        header("Refresh:0; url = index.php");
+
     }
 }
 

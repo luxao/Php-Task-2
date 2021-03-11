@@ -118,20 +118,10 @@ if(isset($_POST['person_id'])){
         values ('$person_id','$oh_id','$placing','$discipline')");
         $stmt->execute();
 
+        header("Refresh:0; url = index.php");
     }
 }
 
-if($_GET['delete']){
-    if(isset($urlDelete)){
-
-        $deleteId = $_GET['delete'];
-        $conn = new Database();
-        $conn->getConnection()->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->getConnection()->prepare("DELETE  FROM umiestnenia WHERE person_id ='$deleteId';");
-
-        $stmt->execute();
-    }
-}
 
 if(isset($_POST['deleting'])){
         if(isset($urlDelete)){
@@ -142,6 +132,8 @@ if(isset($_POST['deleting'])){
         $stmt->execute();
         $stmt = $conn->getConnection()->prepare("DELETE  FROM osoby WHERE id ='$urlDelete';");
         $stmt->execute();
+
+        header("Refresh:0; url = index.php");
     }
 
 }
