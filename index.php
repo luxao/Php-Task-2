@@ -121,14 +121,30 @@ if(isset($_POST['person_id'])){
     }
 }
 
-//if(isset($_GET['delete'])){
-//    $deleteId = $_GET['delete'];
-//    $conn = new Database();
-//    $conn->getConnection()->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-//    $stmt = $conn->getConnection()->prepare("DELETE * FROM osoby WHERE id ='$deleteId';");
-//    $stmt->execute();
-//
-//}
+if($_GET['delete']){
+    if(isset($urlDelete)){
+
+        $deleteId = $_GET['delete'];
+        $conn = new Database();
+        $conn->getConnection()->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        $stmt = $conn->getConnection()->prepare("DELETE  FROM umiestnenia WHERE person_id ='$deleteId';");
+
+        $stmt->execute();
+    }
+}
+
+if(isset($_POST['deleting'])){
+        if(isset($urlDelete)){
+
+        $conn = new Database();
+        $conn->getConnection()->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        $stmt = $conn->getConnection()->prepare("DELETE  FROM umiestnenia WHERE person_id ='$urlDelete';");
+        $stmt->execute();
+        $stmt = $conn->getConnection()->prepare("DELETE  FROM osoby WHERE id ='$urlDelete';");
+        $stmt->execute();
+    }
+
+}
 
 
 ?>
@@ -362,7 +378,7 @@ if(isset($_POST['person_id'])){
                     </div>
                     <div class="modal-body">
                         <form method="post" action="index.php">
-                            <input type="number" name="id" id="id" value="" placeholder="1" min="24">
+                            <input type="number" name="id" id="id" value="" placeholder="24" min="24">
                             <br>
                             <input type="text" name="name" id="name" placeholder="Meno" value="">
                             <br>
@@ -451,6 +467,10 @@ if(isset($_POST['person_id'])){
 
 
 </main>
+
+<script>
+
+</script>
 
 
 </body>
