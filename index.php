@@ -348,10 +348,6 @@ if(isset($_POST['deleting'])){
              }
 
 
-
-
-
-
             ?>
 
             </tbody>
@@ -460,9 +456,6 @@ if(isset($_POST['deleting'])){
 
 </main>
 
-<script>
-
-</script>
 
 
 </body>
