@@ -3,10 +3,10 @@ include "Classes/Game.php";
 include "Classes/Winners.php";
 include "Classes/helper/Database.php";
 include "Classes/Person.php";
+include "Classes/Placement.php";
 
-
-$sortNameAsc = "nameAsc";
-$sortNameDesc = "nameDesc";
+$sortNameAsc = "menoAsc";
+$sortNameDesc = "menoDesc";
 $sortYearAsc = "yearAsc";
 $sortYearDesc = "yearDesc";
 $sortTypeAsc = "typeAsc";
@@ -14,7 +14,7 @@ $sortTypeDesc = "typeDesc";
 $urlSort = $_GET['sorting'];
 $urlPerson = $_GET['person'];
 $urlEdit = $_GET['edit'];
-
+$urlDelete =$_GET['delete'];
 
 
 try {
@@ -72,6 +72,63 @@ catch (PDOException $exception){
     echo "Error: " . $exception->getMessage();
 }
 
+
+if(isset($_POST['name'])){
+    if(isset($_POST['id'])){
+       $person = new Person();
+       $person->setId($_POST['id']);
+       $person->setName($_POST['name']);
+       $person->setSurname($_POST['surname']);
+       $person->setBirthDay($_POST['birth_day']);
+       $person->setBirthPlace($_POST['birth_place']);
+       $person->setBirthCountry($_POST['birth_country']);
+
+       $id = $person->getId();
+       $name = $person->getName();
+       $surname = $person->getSurname();
+       $birth_day = $person->getBirthDay();
+       $birth_place = $person->getBirthPlace();
+       $birth_country = $person->getBirthCountry();
+
+        $conn = new Database();
+        $conn->getConnection()->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        $stmt = $conn->getConnection()->prepare("Insert into osoby (id,name, surname, birth_day, birth_place, birth_country) 
+        values ('$id','$name','$surname','$birth_day','$birth_place','$birth_country')");
+        $stmt->execute();
+
+    }
+}
+
+if(isset($_POST['person_id'])){
+    if(isset($_POST['oh_id'])){
+        $placement = new Placement();
+        $placement->setPersonId($_POST['person_id']);
+        $placement->setOhId($_POST['oh_id']);
+        $placement->setPlacing($_POST['placing']);
+        $placement->setDiscipline($_POST['discipline']);
+
+        $person_id = $placement->getPersonId();
+        $oh_id = $placement->getOhId();
+        $placing = $placement->getPlacing();
+        $discipline = $placement->getDiscipline();
+
+        $conn = new Database();
+        $conn->getConnection()->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        $stmt = $conn->getConnection()->prepare("Insert into umiestnenia (person_id,oh_id,placing,discipline) 
+        values ('$person_id','$oh_id','$placing','$discipline')");
+        $stmt->execute();
+
+    }
+}
+
+//if(isset($_GET['delete'])){
+//    $deleteId = $_GET['delete'];
+//    $conn = new Database();
+//    $conn->getConnection()->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+//    $stmt = $conn->getConnection()->prepare("DELETE * FROM osoby WHERE id ='$deleteId';");
+//    $stmt->execute();
+//
+//}
 
 
 ?>
@@ -157,6 +214,29 @@ catch (PDOException $exception){
         border-radius: 10px;
     }
 
+    .addOlympicv,.modal-body {
+        text-align: center;
+    }
+
+    input {
+        margin: .2em   ;
+    }
+    #modal-body2 {
+        text-align: center;
+    }
+     label {
+        display: block;
+        text-decoration: underline;
+         font-size: 1.3em;
+    }
+     #person_id,#oh_id,#placing,#discipline {
+         width: 10em;
+         border: 2px solid deepskyblue;
+     }
+     #id,#name,#surname,#birth_day,#birth_place,#birth_country {
+         border: 2px solid orange;
+         width: 14em;
+     }
 
 
 </style>
@@ -213,15 +293,16 @@ catch (PDOException $exception){
                         }
                     }
             }
-            if(!$_GET['person']) {
 
-                    if ($urlSort == "nameAsc") {
+          else  if($_GET['sorting']) {
+
+                    if ($urlSort == "menoAsc") {
                         foreach ($resultASC as $winners) {
                             echo $winners->getRow();
 
                         }
                     }
-                    if ($urlSort == "nameDesc") {
+                    if ($urlSort == "menoDesc") {
                         foreach ($resultDESC as $winners) {
                             echo $winners->getRow();
 
@@ -247,21 +328,95 @@ catch (PDOException $exception){
                     } else if ($urlSort == "yearDesc") {
                         foreach ($resultYearDesc as $winners) {
                             echo $winners->getRow();
-
-                        }
-                    } else {
-                        foreach ($result as $winners) {
-                            echo $winners->getRow();
-
                         }
                     }
             }
+             else {
+
+                     foreach ($result as $winners) {
+                         echo $winners->getRow();
+                     }
+
+             }
+
+
+
+
+
+
             ?>
 
             </tbody>
         </table>
 
+        <div class="addOlympicv">
+            <button type="button" id="create" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Vytvor nového športovca</button>
+            <button type="button" id="add-placing" class="btn btn-success btn-lg" data-toggle="modal" data-target="#secondModal">Pridaj novému športovci umiestnenie</button>
+        </div>
+
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Vytvor Športovca</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="index.php">
+                            <input type="number" name="id" id="id" value="" placeholder="1" min="24">
+                            <br>
+                            <input type="text" name="name" id="name" placeholder="Meno" value="">
+                            <br>
+                            <input type="text" name="surname" id="surname" placeholder="Priezvisko" value="">
+                            <br>
+                            <input type="text" name="birth_day" id="birth_day" placeholder="Dátum narod." value="">
+                            <br>
+                            <input type="text" name="birth_place" id="birth_place" placeholder="Mesto" value="">
+                            <br>
+                            <input type="text" name="birth_country" id="birth_country" placeholder="Krajina" value="">
+                            <br>
+                            <input type="submit" class="btn btn-success">
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="secondModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Vytvor Umiestnenie</h4>
+                    </div>
+                    <div class="modal-body" id="modal-body2">
+                        <form method="post" action="index.php">
+                            <label for="person_id">id:</label>
+                            <input type="number" name="person_id" id="person_id" value="" placeholder="24" min="24">
+                            <br>
+                            <label for="oh_id">Oh id:</label>
+                            <input type="number" name="oh_id" id="oh_id" placeholder="23" min="1" max="35" value="" >
+                            <br>
+                            <label for="placing">Umiestnenie:</label>
+                            <input type="number" name="placing" id="placing" placeholder="27"  min="1" max="100" value="">
+                            <br>
+                            <label for="discipline">Disciplína:</label>
+                            <input type="text" name="discipline" id="discipline" placeholder="gaučing" value="">
+                            <br>
+                            <input type="submit" class="btn btn-success">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
     <div  id="second">
 
     <div class="container">

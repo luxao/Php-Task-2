@@ -47,7 +47,9 @@ class Winners {
                 <td>$this->type</td>
                 <td>$this->discipline</td>
                 <td><a href='EditPerson.php?edit=$this->id' class='btn btn-primary'>upraviť</a></td>
-                 <td><a href='EditPerson.php?delete=$this->id' class='btn btn-danger'>vymazať</a></td>
+                 <td>
+                 <a href='index.php?delete=$this->id' class='btn btn-danger'>vymazať</a>     
+                </td>
                   </tr>
         ";
     }
