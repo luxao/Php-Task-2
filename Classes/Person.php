@@ -9,6 +9,12 @@ class Person {
     private $city;
     private $type;
     private $discipline;
+    private  $birth_day;
+    private  $birth_place;
+    private  $birth_country;
+    private $death_day;
+    private $death_place;
+    private $death_country;
 
     /**
      * Person constructor.
@@ -64,24 +70,24 @@ class Person {
         $this->placing = $placing;
     }
 
-
-
-
-    public function getPerson(){
-        return "
-                <tr>
-                <td>$this->id</td>
-                <td>$this->name  $this->surname</td>
-                <td>$this->placing</td>
-                <td>$this->year</td>
-                <td>$this->city</td>
-                <td>$this->type</td>
-                <td>$this->discipline</td>
-                  <td><a href='?edit=$this->id' class='btn btn-primary'>upraviť</a></td>
-                 <td><a href='?delete=$this->id' class='btn btn-danger'>vymazať</a></td>
-                  </tr>
-
-        ";
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
     }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+
+
+
 
 }

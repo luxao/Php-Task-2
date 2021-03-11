@@ -1,6 +1,5 @@
 <?php
 
-
 class Winners {
     public $id;
     private $golds;
@@ -22,7 +21,13 @@ class Winners {
      * Winners constructor.
      *
      */
-    public function __construct(){}
+
+
+
+    public function __construct()
+    {
+
+    }
 
     /**
      * @return mixed
@@ -41,8 +46,8 @@ class Winners {
                 <td>$this->city</td>
                 <td>$this->type</td>
                 <td>$this->discipline</td>
-                <td><a href='?edit=$this->id'  class='btn btn-primary'>upraviť</a></td>
-                 <td><a href='?delete=$this->id' class='btn btn-danger'>vymazať</a></td>
+                <td><a href='EditPerson.php?edit=$this->id' class='btn btn-primary'>upraviť</a></td>
+                 <td><a href='EditPerson.php?delete=$this->id' class='btn btn-danger'>vymazať</a></td>
                   </tr>
         ";
     }
@@ -59,6 +64,22 @@ class Winners {
                 <td>$this->death_country</td>
                 
         </tr> ";
+    }
+
+
+    public function getPersonInfo(){
+        return "
+                <tr>
+                <td>$this->id</td>
+                <td>$this->name  $this->surname</td>
+                <td>$this->placing</td>
+                <td>$this->year</td>
+                <td>$this->city</td>
+                <td>$this->type</td>
+                <td>$this->discipline</td>
+                 
+
+        ";
     }
 
 

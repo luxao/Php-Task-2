@@ -4,6 +4,7 @@ include "Classes/Winners.php";
 include "Classes/helper/Database.php";
 include "Classes/Person.php";
 
+
 $sortNameAsc = "nameAsc";
 $sortNameDesc = "nameDesc";
 $sortYearAsc = "yearAsc";
@@ -14,7 +15,7 @@ $urlSort = $_GET['sorting'];
 $urlPerson = $_GET['person'];
 $urlEdit = $_GET['edit'];
 
-$person = new Person();
+
 
 try {
     $db = new Database();
@@ -64,12 +65,15 @@ from umiestnenia join osoby on  umiestnenia.person_id = osoby.id group by umiest
     $stmtPerson = $db->getConnection()->prepare("select osoby.id,osoby.name,osoby.surname,u.placing,o.year,o.city,o.type,u.discipline
 from osoby join umiestnenia u on osoby.id = u.person_id join oh o on o.id = u.oh_id  where osoby.id = '$urlPerson'; ");
     $stmtPerson->execute();
-    $resultPerson = $stmtPerson->fetchAll(PDO::FETCH_CLASS,"Person");
+    $resultPerson = $stmtPerson->fetchAll(PDO::FETCH_CLASS,"Winners");
 }
 
 catch (PDOException $exception){
     echo "Error: " . $exception->getMessage();
 }
+
+
+
 ?>
 
 <!doctype html>
@@ -198,11 +202,11 @@ catch (PDOException $exception){
 
             if($_GET['person']) {
                 echo "
-                    <a href='index.php'>Späť <i class='fas fa-undo'></i></a>
+                    <a href='index.php' class='btn btn-danger'>Späť<i class='fas fa-undo'></i></a>
                 ";
                     if($urlPerson){
                         foreach ($resultPerson as $value){
-                            echo $value->getPerson();
+                            echo $value->getPersonInfo();
                             echo "<td></td>
                                <td></td>
                                </tr>";
