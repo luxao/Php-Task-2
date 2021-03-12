@@ -33,7 +33,6 @@ try {
     $stmtDESC = $db->getConnection()->prepare("select osoby.id,osoby.name,osoby.surname,u.placing,o.year,o.city,o.type,u.discipline
     from osoby join umiestnenia u on osoby.id = u.person_id join oh o on o.id = u.oh_id where placing = 1 order by osoby.name DESC ; ");
     $stmtDESC->execute();
-
     $resultDESC = $stmtDESC->fetchAll(PDO::FETCH_CLASS,"Winners");
 
     $stmtYearAsc = $db->getConnection()->prepare("select osoby.id,osoby.name,osoby.surname,u.placing,o.year,o.city,o.type,u.discipline
@@ -72,6 +71,12 @@ catch (PDOException $exception){
     echo "Error: " . $exception->getMessage();
 }
 
+/**
+ * Poznámka:
+ * AK som skúšal používať PersonController tak mi to z nejakého dôvodu
+ * nechcelo vôbec zobratiť stránku.. Z toho dôvodu som sa rozhodol
+ * využiť tento nie pekný ale fungujucí prístup
+ */
 
 if(isset($_POST['name'])){
     if(isset($_POST['id'])){
