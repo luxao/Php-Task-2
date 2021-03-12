@@ -39,22 +39,20 @@ class Winners {
 
 
 
-
     public function getRow(){
         return "<tr>
-                <td>$this->id</td>
-                <td><a href='?person=$this->id'>$this->name  $this->surname</a></td>
+                <td style='display: none'>$this->id</td>
+                <td><a href='?person=$this->id' class='btn btn-warning' style='text-decoration:none;'><i class='fas fa-user'></i> $this->name  $this->surname</a></td>
                 <td>$this->placing</td>
                 <td>$this->year</td>
-                <td>$this->city</td>
+                <td>$this->city <i class='fas fa-city'></i></td>
                 <td>$this->type</td>
                 <td>$this->discipline</td>
-                <td><a href='EditPerson.php?edit=$this->id' class='btn btn-primary'>upraviť</a></td>
+                <td><a href='EditPerson.php?edit=$this->id' class='btn btn-primary'><i class='fas fa-user-edit'></i></a></td>
                  <td>        
                     <form method='post' action='index.php?delete=$this->id'>
-                        <button type='submit' name='deleting' class='btn btn-danger'>vymazať</button>
-                    </form>
-                   
+                        <button type='submit' name='deleting' class='btn btn-danger'><i class='fas fa-trash-alt'></i></button>
+                    </form>                 
                 </td>
                   </tr>
         ";
@@ -62,10 +60,10 @@ class Winners {
 
     public function getTopWinners(){
         return "<tr>
-                <td>$this->golds</td>
-                <td>$this->name  $this->surname</td>
-                <td>$this->birth_day</td>
-                <td>$this->birth_place</td>             
+                <td>$this->golds <i class='fas fa-medal'></i></td>
+                <td style='background: gold'>$this->name  $this->surname</td>
+                <td>$this->birth_day <i class='fas fa-birthday-cake'></i></td>
+                <td>$this->birth_place <i class='fas fa-city'></i></td>             
                 <td>$this->birth_country</td>
                 <td>$this->death_day</td>
                 <td>$this->death_place</td>
@@ -78,7 +76,7 @@ class Winners {
     public function getPersonInfo(){
         return "
                 <tr>
-                <td>$this->id</td>
+                <td style='display: none'>$this->id</td>
                 <td>$this->name  $this->surname</td>
                 <td>$this->placing</td>
                 <td>$this->year</td>

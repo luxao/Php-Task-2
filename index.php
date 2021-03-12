@@ -5,8 +5,8 @@ include "Classes/helper/Database.php";
 include "Classes/Person.php";
 include "Classes/Placement.php";
 
-$sortNameAsc = "menoAsc";
-$sortNameDesc = "menoDesc";
+$sortNameAsc = "asc";
+$sortNameDesc = "desc";
 $sortYearAsc = "yearAsc";
 $sortYearDesc = "yearDesc";
 $sortTypeAsc = "typeAsc";
@@ -95,7 +95,7 @@ if(isset($_POST['name'])){
         $stmt = $conn->getConnection()->prepare("Insert into osoby (id,name, surname, birth_day, birth_place, birth_country) 
         values ('$id','$name','$surname','$birth_day','$birth_place','$birth_country')");
         $stmt->execute();
-
+        header("Refresh:0; url = index.php");
     }
 }
 
@@ -159,122 +159,38 @@ if(isset($_POST['deleting'])){
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="style.css">
 </head>
-<style>
-    table {
-        margin-top: .25em;
-       box-shadow: 5px 5px 5px #0D0D0D;
-    }
-    th {
-        text-align: center;
-    }
-    body {
-        background-image: -webkit-gradient(
-                linear,
-                left top,
-                left bottom,
-                color-stop(0.35, #ECFC08),
-                color-stop(1, #E02626)
-        );
-        background-repeat: no-repeat;
-        background-image: -o-linear-gradient(bottom, #ECFC08 35%, #E02626 100%);
-        background-image: -moz-linear-gradient(bottom, #ECFC08 35%, #E02626 100%);
-        background-image: -webkit-linear-gradient(bottom, #ECFC08 35%, #E02626 100%);
-        background-image: -ms-linear-gradient(bottom, #ECFC08 35%, #E02626 100%);
-        background-image: linear-gradient(to bottom, #ECFC08 35%, #E02626 100%);
-        font-family: 'Amaranth', sans-serif;
-    }
-    #second {
-        font-family: 'Amaranth', sans-serif;
-    }
 
-    h1 {
-        font-family: 'Amaranth', sans-serif;
-        color: red;
-        text-align: center;
-        margin: .25em auto 0 auto;
-        text-shadow: 2px 2px 2px #0D0D0D;
-    }
-    h2 {
-        font-family: 'Amaranth', sans-serif;
-        color: gold;
-        text-align: center;
-        margin: 0 auto;
-        text-shadow: 2px 2px 2px #0D0D0D;
-    }
-
-    table:hover {
-        cursor: pointer;
-    }
-
-    ::-webkit-scrollbar {
-        width: 12px;
-    }
-
-    ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px grey;
-        border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #0D0D0D;
-        border-radius: 10px;
-    }
-
-    .addOlympicv,.modal-body {
-        text-align: center;
-    }
-
-    input {
-        margin: .2em   ;
-    }
-    #modal-body2 {
-        text-align: center;
-    }
-     label {
-        display: block;
-        text-decoration: underline;
-         font-size: 1.3em;
-    }
-     #person_id,#oh_id,#placing,#discipline {
-         width: 10em;
-         border: 2px solid deepskyblue;
-     }
-     #id,#name,#surname,#birth_day,#birth_place,#birth_country {
-         border: 2px solid orange;
-         width: 14em;
-     }
-
-
-</style>
 
 <body>
 
 <header>
     <nav class="navbar">
+
         <h1>
-            Olympijský víťazi
+            <i class='fas fa-medal'></i> Olympijský víťazi <i class='fas fa-medal'></i>
         </h1>
     </nav>
 </header>
 
 <main>
     <div class='container'>
-        <table class='table table-dark table-hover table-bordered border-light  table-hover'>
+
+        <table  class='table table-dark table-hover table-bordered border-light  table-hover'>
             <thead>
             <tr>
-                <th>id</th>
+                <th style='display: none'>>id</th>
                 <th>Olympijský víťaz <a href='?sorting=<?php echo $sortNameAsc?>'><i class='fas fa-sort-alpha-down'></i></a>
                     <a href='?sorting=<?php echo $sortNameDesc?>'><i class='fas fa-sort-alpha-down-alt'></i></a>
                 </th>
                 <th>
-                    Umiestnenie
+                    Umiestnenie <i class='fas fa-medal'></i>
                 </th>
                 <th>Rok <a href='?sorting=<?php echo $sortYearAsc?>'> <i class='fas fa-sort-numeric-down'></i></a>
                     <a href='?sorting=<?php echo $sortYearDesc?>'><i class='fas fa-sort-numeric-down-alt'></i></a>
                 </th>
-                <th>Miesto</th>
+                <th>Mesto <i class='fas fa-city'></i></th>
                 <th>Typ<a href='?sorting=<?php echo $sortTypeAsc?>'> <i class='fas fa-sort-amount-down-alt'></i></a>
                     <a href='?sorting=<?php echo $sortTypeDesc?>'><i class='fas fa-sort-amount-down'></i></a>
                 </th>
@@ -304,13 +220,13 @@ if(isset($_POST['deleting'])){
 
           else  if($_GET['sorting']) {
 
-                    if ($urlSort == "menoAsc") {
+                    if ($urlSort == "asc") {
                         foreach ($resultASC as $winners) {
                             echo $winners->getRow();
 
                         }
                     }
-                    if ($urlSort == "menoDesc") {
+                    if ($urlSort == "desc") {
                         foreach ($resultDESC as $winners) {
                             echo $winners->getRow();
 
@@ -354,8 +270,8 @@ if(isset($_POST['deleting'])){
         </table>
 
         <div class="addOlympicv">
-            <button type="button" id="create" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Vytvor nového športovca</button>
-            <button type="button" id="add-placing" class="btn btn-success btn-lg" data-toggle="modal" data-target="#secondModal">Pridaj novému športovci umiestnenie</button>
+            <button type="button" id="create" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Vytvor nového športovca <i class="fas fa-user-plus"></i></button>
+            <button type="button" id="add-placing" class="btn btn-success btn-lg" data-toggle="modal" data-target="#secondModal">Pridaj novému športovci umiestnenie <i class="fas fa-medal"></i></button>
         </div>
 
         <div id="myModal" class="modal fade" role="dialog">
@@ -365,7 +281,7 @@ if(isset($_POST['deleting'])){
                         <h4 class="modal-title">Vytvor Športovca</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="index.php">
+                        <form method="post"  action="index.php">
                             <input type="number" name="id" id="id" value="" placeholder="24" min="24">
                             <br>
                             <input type="text" name="name" id="name" placeholder="Meno" value="">
@@ -383,7 +299,7 @@ if(isset($_POST['deleting'])){
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
             </div>
@@ -413,7 +329,7 @@ if(isset($_POST['deleting'])){
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
             </div>
@@ -421,18 +337,18 @@ if(isset($_POST['deleting'])){
 
     </div>
 
-    <div  id="second">
+
 
     <div class="container">
         <br>
-        <h2>TOP 10 ŠPORTOVCOV</h2>
+        <h2><i class="fas fa-trophy"></i> TOP 10 ŠPORTOVCOV <i class="fas fa-trophy"></i></h2>
         <table class="table table-light table-bordered border-dark  table-hover ">
             <thead>
                 <tr>
-                    <th>Počet Zlatých Medailí</th>
+                    <th>Počet Zlatých Medailí <i class='fas fa-medal'></i></th>
                     <th>Mená Olympionikov</th>
-                    <th>Dátum narodenia</th>
-                    <th>Miesto</th>
+                    <th>Dátum narodenia <i class='fas fa-birthday-cake'></i></th>
+                    <th>Mesto <i class='fas fa-city'></i></th>
                     <th>Krajina</th>
                     <th>Dátum úmrtia</th>
                     <th>Miesto úmrtia</th>
@@ -451,7 +367,7 @@ if(isset($_POST['deleting'])){
 
     </div>
 
-    </div>
+
 
 
 </main>

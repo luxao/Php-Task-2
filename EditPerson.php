@@ -15,7 +15,6 @@ try {
     $person = $stmt->fetch();
 
 
-
 }
 catch (PDOException $exception){
     echo "Error: " . $exception->getMessage();
@@ -72,56 +71,11 @@ if(isset($_POST['name'])){
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <style>
-    body {
-        background-image: -webkit-gradient(
-                linear,
-                left top,
-                left bottom,
-                color-stop(0.35, #ECFC08),
-                color-stop(1, #E02626)
-        );
-        background-repeat: no-repeat;
-        background-image: -o-linear-gradient(bottom, #ECFC08 35%, #E02626 100%);
-        background-image: -moz-linear-gradient(bottom, #ECFC08 35%, #E02626 100%);
-        background-image: -webkit-linear-gradient(bottom, #ECFC08 35%, #E02626 100%);
-        background-image: -ms-linear-gradient(bottom, #ECFC08 35%, #E02626 100%);
-        background-image: linear-gradient(to bottom, #ECFC08 35%, #E02626 100%);
-        font-family: 'Amaranth', sans-serif;
-    }
-    h1 {
-        font-family: 'Amaranth', sans-serif;
-        color: red;
-        text-align: center;
-        margin: .25em auto 0 auto;
-        text-shadow: 2px 2px 2px #0D0D0D;
-    }
-    ::-webkit-scrollbar {
-        width: 12px;
-    }
-
-    ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px grey;
-        border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #0D0D0D;
-        border-radius: 10px;
-    }
-
-    .card {
-        margin: 5em 5em 35em 5em;
-        box-shadow: 5px 5px 5px #0D0D0D;
-        border-radius: 25px;
-    }
-    .card-body {
-        text-align: center;
-    }
-
     input {
         margin: 1em 0 0 0 ;
         width: 12em;
@@ -145,7 +99,7 @@ if(isset($_POST['name'])){
             <div class="card-body">
                 <h2 class="card-title">Športovec</h2>
                 <h5 class="card-subtitle mb-2 text-muted">Editni Športovca</h5>
-                <a href='index.php' class="btn btn-warning">Späť pozrieť zmeny<i class='fas fa-undo'></i></a>
+                <a href='index.php' class="btn btn-warning">Späť <i class='fas fa-undo'></i></a>
                 <form method="post" action="EditPerson.php">
 
                     <input type="hidden" name="id" value="<?php  echo  $person->getId();?>">
@@ -166,7 +120,6 @@ if(isset($_POST['name'])){
 
     </div>
 </main>
-
 
 </body>
 
