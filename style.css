@@ -38,8 +38,10 @@ table:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #0D0D0D;
+    /*background: #0D0D0D;*/
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     border-radius: 10px;
+    animation: gradient 15s ease infinite;
 }
 
 .addOlympicv,.modal-body {
@@ -87,6 +89,8 @@ body,.modal-body {
     animation: gradient 15s ease infinite;
 }
 
+
+
 @keyframes gradient {
     0% {
         background-position: 0% 50%;
@@ -119,6 +123,11 @@ h4:hover {
 }
 .card-body {
     text-align: center;
+}
+
+.btn-info,.btn-success {
+    border: 2px solid gold;
+
 }
 
 
