@@ -77,7 +77,7 @@ class Winners {
     public function getTopWinners(){
         return "<tr>
                 <td>$this->golds <i class='fas fa-medal'></i></td>
-                <td style='background: gold'>$this->name  $this->surname</td>
+                <td style='background: gold'><i class='fas fa-trophy'></i> $this->name  $this->surname <i class='fas fa-trophy'></i></td>
                 <td>$this->birth_day <i class='fas fa-birthday-cake'></i></td>
                 <td>$this->birth_place <i class='fas fa-city'></i></td>             
                 <td>$this->birth_country</td>
