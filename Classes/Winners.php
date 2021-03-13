@@ -18,11 +18,27 @@ class Winners {
     private $death_country;
 
     /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+
+
+    /**
      * Winners constructor.
      *
      */
-
-
 
     public function __construct()
     {

@@ -9,7 +9,8 @@ $person = new Person();
 try {
     $db = new Database();
     $db->getConnection()->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $db->getConnection()->prepare("select osoby.id,osoby.name,osoby.surname from osoby where osoby.id = '$urlEdit';");
+    $stmt = $db->getConnection()->prepare("select osoby.id,osoby.name,osoby.surname,osoby.birth_day,osoby.birth_place,osoby.birth_country
+       from osoby where osoby.id = '$urlEdit';");
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_CLASS, "Person");
     $person = $stmt->fetch();
@@ -26,7 +27,8 @@ if(isset($_POST['name'])){
         $person_id = $_POST['id'];
         $conn = new Database();
         $conn->getConnection()->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->getConnection()->prepare("select osoby.id,osoby.name,osoby.surname from osoby where osoby.id = '$person_id ';");
+        $stmt = $conn->getConnection()->prepare("select osoby.id,osoby.name,osoby.surname,osoby.birth_day,osoby.birth_place,osoby.birth_country
+       from osoby where osoby.id = '$person_id ';");
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_CLASS, "Person");
         $person = $stmt->fetch();
@@ -35,11 +37,21 @@ if(isset($_POST['name'])){
         $person->setId($_POST['id']);
         $person->setName($_POST['name']);
         $person->setSurname($_POST['surname']);
+        $person->setBirthDay($_POST['birth_day']);
+        $person->setBirthPlace($_POST['birth_place']);
+        $person->setBirthCountry($_POST['birth_country']);
+
         $name = $person->getName();
         $surname = $person->getSurname();
+        $birth_day = $person->getBirthDay();
+        $birth_place = $person->getBirthPlace();
+        $birth_country = $person->getBirthCountry();
+
         $id = $person->getId();
 
-        $stmt = $conn->getConnection()->prepare("Update osoby set name='$name', surname='$surname' where id ='$id'");
+        $stmt = $conn->getConnection()->prepare("Update osoby set name='$name', surname='$surname',birth_day='$birth_day',
+                 birth_place='$birth_place',birth_country='$birth_country'
+        where id ='$id'");
         $stmt->execute();
 
         header("Refresh:0; url = index.php");
@@ -109,6 +121,16 @@ if(isset($_POST['name'])){
 
                      <input type="text"  name="surname" id="surname"  placeholder="Priezvisko" value="<?php  echo  $person->getSurname();?>">
                         <br>
+
+                    <input type="text" name="birth_day" id="birth_day" placeholder="Dátum Narodenia" value="<?php echo $person->getBirthDay() ?>">
+                    <br>
+
+                    <input type="text" name="birth_place" id="birth_place" placeholder="Mesto Narodenia" value="<?php  echo $person->getBirthPlace() ?>">
+                    <br>
+
+                    <input type="text" name="birth_country" id="birth_country" placeholder="Krajina Narodenia" value="<?php echo $person->getBirthCountry()?>">
+                    <br>
+
 
                     <input type="submit" class="btn btn-success">
                 </form>

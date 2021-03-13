@@ -81,26 +81,31 @@ catch (PDOException $exception){
 if(isset($_POST['name'])){
     if(isset($_POST['id'])){
        $person = new Person();
-       $person->setId($_POST['id']);
-       $person->setName($_POST['name']);
-       $person->setSurname($_POST['surname']);
-       $person->setBirthDay($_POST['birth_day']);
-       $person->setBirthPlace($_POST['birth_place']);
-       $person->setBirthCountry($_POST['birth_country']);
+        try {
+            $person->setId($_POST['id']);
+            $person->setName($_POST['name']);
+            $person->setSurname($_POST['surname']);
+            $person->setBirthDay($_POST['birth_day']);
+            $person->setBirthPlace($_POST['birth_place']);
+            $person->setBirthCountry($_POST['birth_country']);
 
-       $id = $person->getId();
-       $name = $person->getName();
-       $surname = $person->getSurname();
-       $birth_day = $person->getBirthDay();
-       $birth_place = $person->getBirthPlace();
-       $birth_country = $person->getBirthCountry();
+            $id = $person->getId();
+            $name = $person->getName();
+            $surname = $person->getSurname();
+            $birth_day = $person->getBirthDay();
+            $birth_place = $person->getBirthPlace();
+            $birth_country = $person->getBirthCountry();
 
-        $conn = new Database();
-        $conn->getConnection()->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->getConnection()->prepare("Insert into osoby (id,name, surname, birth_day, birth_place, birth_country) 
+            $conn = new Database();
+            $conn->getConnection()->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            $stmt = $conn->getConnection()->prepare("Insert into osoby (id,name, surname, birth_day, birth_place, birth_country) 
         values ('$id','$name','$surname','$birth_day','$birth_place','$birth_country')");
-        $stmt->execute();
-        header("Refresh:0; url = index.php");
+            $stmt->execute();
+            header("Refresh:0; url = index.php");
+        } catch (PDOException $exception){
+            echo "<script>alert('Nemôžeš vytvoriť osobu ktorá už existuje !!')</script>";
+        }
+
     }
 }
 
@@ -325,7 +330,7 @@ if(isset($_POST['deleting'])){
                             <input type="number" name="oh_id" id="oh_id" placeholder="23" min="1" max="35" value="" >
                             <br>
                             <label for="placing">Umiestnenie:</label>
-                            <input type="number" name="placing" id="placing" placeholder="27"  min="1" max="100" value="">
+                            <input type="number" name="placing" id="placing" placeholder="1 = uvidite v table :)"  min="1" max="50" value="">
                             <br>
                             <label for="discipline">Disciplína:</label>
                             <input type="text" name="discipline" id="discipline" placeholder="gaučing" value="">
